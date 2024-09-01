@@ -1,10 +1,9 @@
-package service;
+package edu.backkontosystembackend.service;
 
-import dto.CustomerDTO;
-import entity.Customer;
-import org.springframework.beans.factory.annotation.Autowired;
+import edu.backkontosystembackend.dto.CustomerDTO;
+import edu.backkontosystembackend.entity.Customer;
 import org.springframework.stereotype.Service;
-import repository.CustomerRepository;
+import edu.backkontosystembackend.repository.CustomerRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

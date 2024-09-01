@@ -1,4 +1,4 @@
-package dto;
+package edu.backkontosystembackend.dto;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

@@ -1,13 +1,13 @@
 package edu.backkontosystembackend;
 
-import dto.CustomerDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import edu.backkontosystembackend.dto.CustomerDTO;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import service.CustomerService;
+import edu.backkontosystembackend.service.CustomerService;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
+
 
     private final CustomerService customerService;
 

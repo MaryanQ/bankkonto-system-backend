@@ -1,4 +1,4 @@
-package entity;
+package edu.backkontosystembackend.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
