@@ -2,6 +2,7 @@ package edu.backkontosystembackend.controller;
 
 import edu.backkontosystembackend.dto.CustomerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import edu.backkontosystembackend.service.CustomerService;
@@ -35,7 +36,7 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO) {
       CustomerDTO createdCustomer = customerService.createCustomer(customerDTO);
-      return ResponseEntity.ok(createdCustomer);
+        return new ResponseEntity<>(createdCustomer, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -47,6 +48,6 @@ public class CustomerController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

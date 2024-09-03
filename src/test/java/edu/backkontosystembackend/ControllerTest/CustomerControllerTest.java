@@ -19,6 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -78,10 +80,12 @@ public class CustomerControllerTest {
 
         mockMvc.perform(post("/customers")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(newCustomer)))
-                .andExpect(status().isOk())
+                        .content(objectMapper.writeValueAsString(newCustomer))
+                        .with(csrf()))  // Ensure the CSRF token is included
+                .andExpect(status().isCreated())  // Expecting 201 Created
                 .andExpect(jsonPath("$.name").value("Bob Brown"));
     }
+
 
 
     @Test
@@ -94,9 +98,11 @@ public class CustomerControllerTest {
 
         mockMvc.perform(put("/customers/{id}", customerId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updatedCustomer)))
+                        .content(objectMapper.writeValueAsString(updatedCustomer))
+                        .with(csrf()))  // Add csrf() to include a CSRF token
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Updated Name"));
+
     }
 
     @Test
@@ -104,7 +110,10 @@ public class CustomerControllerTest {
     void shouldDeleteCustomer() throws Exception {
         long customerId = 1L;
 
-        mockMvc.perform(delete("/customers/{id}", customerId))
-                .andExpect(status().isNoContent());
+        willDoNothing().given(customerService).deleteCustomer(customerId);
+
+        mockMvc.perform(delete("/customers/{id}", customerId)
+                        .with(csrf()))  // Ensure CSRF token is included
+                .andExpect(status().isNoContent());  // Expecting 204 No Content
     }
 }
